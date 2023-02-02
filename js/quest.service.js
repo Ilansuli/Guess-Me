@@ -1,13 +1,13 @@
 'use strict'
 
-var gQuestsTree
+var gQuestsTree 
 var gCurrQuest
 var gPrevQuest = null
 
 function createQuestsTree() {
   gQuestsTree = createQuest('Male?')
-  gQuestsTree.yes = createQuest('Gandhi')
-  gQuestsTree.no = createQuest('Rita')
+  gQuestsTree.yes = createQuest('Painter?')
+  gQuestsTree.no = createQuest('Queen?')
   gCurrQuest = gQuestsTree
   gPrevQuest = null
 }
@@ -26,6 +26,8 @@ function isChildless(node) {
 
 function moveToNextQuest(res) {
   // TODO: update the gPrevQuest, gCurrQuest global vars
+  gPrevQuest = gCurrQuest
+  gCurrQuest = (res === 'yes') ? gQuestsTree.yes : gQuestsTree.no
 }
 
 function addGuess(newQuestTxt, newGuessTxt, lastRes) {

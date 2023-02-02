@@ -15,31 +15,41 @@ function init() {
 }
 
 function onStartGuessing() {
-  // TODO: hide the game-start section
+  // DONE: hide the game-start section
+  $('.game-start').hide()
 
   renderQuest()
-  // TODO: show the quest section
+  // DONE: show the quest section
+  $('.quest').show(300)
 }
 
 function renderQuest() {
-  // TODO: select the <h2> inside quest and update
+  // DONE: select the <h2> inside quest and update
   // its text by the currQuest text
+  var currQuest = getCurrQuest()
+  $('.quest h2').text(currQuest.txt)
+
 }
 
 function onUserResponse(ev) {
   console.log('ev', ev)
   var res = ev.data.ans
+  console.log(ev.data.ans)
   // If this node has no children
   if (isChildless(getCurrQuest())) {
+    console.log('childless')
     if (res === 'yes') {
       alert('Yes, I knew it!')
       // TODO: improve UX
     } else {
       alert('I dont know...teach me!')
-      // TODO: hide and show new-quest section
+      // DONE: hide and show new-quest section'
+      $('.quest').hide()
+      $('.new-quest').show(300)
     }
   } else {
-    // TODO: update the lastRes global var
+    // DONE: update the lastRes global var
+    gLastRes = res
     moveToNextQuest(res)
     renderQuest()
   }
@@ -47,12 +57,13 @@ function onUserResponse(ev) {
 
 function onAddGuess(ev) {
   ev.preventDefault()
+  // DONE: Get the inputs' values
   var newGuess = $('#newGuess').val()
   var newQuest = $('#newQuest').val()
-
-  // TODO: Get the inputs' values
+  console.log(newGuess)
+  console.log(newQuest)
   // TODO: Call the service addGuess
-
+  addGuess(newQuest, newGuess, gLastRes)
   onRestartGame()
 }
 
