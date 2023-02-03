@@ -10,13 +10,11 @@ $('.btn-no').click({ ans: 'no' }, onUserResponse)
 $('.btn-add-guess').click(onAddGuess)
 
 function init() {
-  console.log('local', localStorage[QUESTS_STORAGE_KEY])
   if (!localStorage[QUESTS_STORAGE_KEY]) createQuestsTree()
   else {
     gQuestsTree = loadFromStorage(QUESTS_STORAGE_KEY)
     gCurrQuest = gQuestsTree
   }
-  console.log(gQuestsTree);
 }
 
 function onStartGuessing() {
@@ -40,7 +38,7 @@ function onUserResponse(ev) {
   // If this node has no children
   if (isChildless(getCurrQuest())) {
     if (res === 'yes') {
-      alert('Yes, I knew it!')
+      $('.alert').style.visibility = 'visible'
       // TODO: improve UX
     } else {
       // alert('I dont know...teach me!')
@@ -63,10 +61,13 @@ function onAddGuess(ev) {
   var newQuest = $('#newQuest').val()
   // DONE: Call the service addGuess
   addGuess(newQuest, newGuess, gLastRes)
+  $('#newQuest').val('')
+  $('#newGuess').val('')
   onRestartGame()
 }
 
 function onRestartGame() {
+  console.log('heh');
   $('.new-quest').hide()
   $('.game-start').show()
   gLastRes = null

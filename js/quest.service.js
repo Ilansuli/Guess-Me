@@ -35,14 +35,13 @@ function moveToNextQuest(res) {
 }
 
 function addGuess(newQuestTxt, newGuessTxt, lastRes) {
-  // TODO: Create and Connect the 2 Quests to the quetsions tree
+  // DONE: Create and Connect the 2 Quests to the quetsions tree
   // console.log(gQuestsTree)
   var newQuest = createQuest(newQuestTxt)
   newQuest.yes = createQuest(newGuessTxt)
   newQuest.no = createQuest(gCurrQuest.txt)
   gPrevQuest[lastRes] = newQuest
   if(gCurrQuest) gCurrQuest = gQuestsTree
-
   saveToStorage(QUESTS_STORAGE_KEY, gQuestsTree)
   }
 
