@@ -10,14 +10,18 @@ $('.btn-no').click({ ans: 'no' }, onUserResponse)
 $('.btn-add-guess').click(onAddGuess)
 
 function init() {
-  console.log('Started...')
-  createQuestsTree()
+  console.log('local', localStorage[QUESTS_STORAGE_KEY])
+  if (!localStorage[QUESTS_STORAGE_KEY]) createQuestsTree()
+  else {
+    gQuestsTree = loadFromStorage(QUESTS_STORAGE_KEY)
+    gCurrQuest = gQuestsTree
+  }
+  console.log(gQuestsTree);
 }
 
 function onStartGuessing() {
   // DONE: hide the game-start section
   $('.game-start').hide()
-
   renderQuest()
   // DONE: show the quest section
   $('.quest').show(300)
@@ -32,17 +36,14 @@ function renderQuest() {
 }
 
 function onUserResponse(ev) {
-  console.log('ev', ev)
   var res = ev.data.ans
-  console.log(ev.data.ans)
   // If this node has no children
   if (isChildless(getCurrQuest())) {
-    console.log('childless')
     if (res === 'yes') {
       alert('Yes, I knew it!')
       // TODO: improve UX
     } else {
-      alert('I dont know...teach me!')
+      // alert('I dont know...teach me!')
       // DONE: hide and show new-quest section'
       $('.quest').hide()
       $('.new-quest').show(300)
@@ -60,9 +61,7 @@ function onAddGuess(ev) {
   // DONE: Get the inputs' values
   var newGuess = $('#newGuess').val()
   var newQuest = $('#newQuest').val()
-  console.log(newGuess)
-  console.log(newQuest)
-  // TODO: Call the service addGuess
+  // DONE: Call the service addGuess
   addGuess(newQuest, newGuess, gLastRes)
   onRestartGame()
 }
